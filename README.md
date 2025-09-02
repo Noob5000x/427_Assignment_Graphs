@@ -1,114 +1,116 @@
 # 427 Assignment Graphs
 
-Objective
+### Objective
+
 The goal of this team-based assignment is to advance your skills in graph theory, algorithmic analysis, and professional software development by collaboratively designing and implementing a comprehensive Python application that handles Erdős–Rényi random graph generation, analysis, transformation, and visualization.
 
 You will work in pairs to design, implement, and analyze a modular program capable of:
 
-Generating and exporting Erdős–Rényi graphs;
+- Generating and exporting Erdős–Rényi graphs;
 
-Importing and analyzing graphs from .gml files;
+- Importing and analyzing graphs from .gml files;
 
-Performing multi-source BFS with path tracking;
+- Performing multi-source BFS with path tracking;
 
-Identifying connected components;
+- Identifying connected components;
 
-Detecting cycles and isolated nodes;
+- Detecting cycles and isolated nodes;
 
-Visualizing graphs with annotated paths and substructures;
+- Visualizing graphs with annotated paths and substructures;
 
-Exporting computed metadata alongside the graph.
+- Exporting computed metadata alongside the graph.
 
 This assignment emphasizes both theoretical understanding and practical implementation. The quality of your design decisions, documentation, and analysis is just as important as functional correctness.
 
-Functional Requirements
+### Functional Requirements
+
 You must implement a Python script graph.py that accepts the following command-line parameters and performs operations accordingly. Your solution must be well-structured and modular, with meaningful separation between graph generation, file I/O, algorithms, and visualization.
 
-Command-Line Structure
+#### Command-Line Structure
 python ./graph.py [--input graph_file.gml] [--create_random_graph n c] [--multi_BFS a1 a2 ...] [--analyze] [--plot] [--output out_graph_file.gml]
-Descriptions of Parameters
---input graph_file.gml
+#### Descriptions of Parameters
+- --input graph_file.gml
 Reads a graph from the given .gml file and uses it for all subsequent operations.
 
---create_random_graph n c
+- --create_random_graph n c
 Generates a new Erdős–Rényi graph with n nodes and edge probability 
 p=nc⋅lnn​. Overrides --input. Nodes must be labeled with strings ("0", "1", ..., "n-1").
 
---multi_BFS a1 a2 ...
+- --multi_BFS a1 a2 ...
 Accepts one or more starting nodes and computes BFS trees from each, storing all shortest paths. Each BFS tree must be independently visualized and compared.
 
---analyze
+- --analyze
 Performs additional structural analyses on the graph, including:
 
-Connected Components
+1. Connected Components
 Counts how many distinct connected subgraphs exist.
 
-Cycle Detection
+2. Cycle Detection
 Determines whether the graph contains any cycles.
 A cycle is a path that starts and ends at the same node, without repeating any edges or nodes (except the start/end).
 
-Isolated Nodes
+3. Isolated Nodes
 Identifies nodes that are not connected to any other node.
 
-Graph Density
+4. Graph Density
 Computes how dense the graph is.
 Graph density measures how many edges exist in the graph compared to the maximum possible. It is a number between 0 (very sparse) and 1 (fully connected).
 
-Average Shortest Path Length
+5. Average Shortest Path Length
 If the graph is connected, computes the average number of steps along the shortest paths for all pairs of nodes.
 
---plot
+- --plot
 Visualizes the graph with:
 
-Highlighted shortest paths from each BFS root node;
+1. Highlighted shortest paths from each BFS root node;
 
-Distinct styling for isolated nodes;
+2. Distinct styling for isolated nodes;
 
-Optional visualization of individual connected components.
+3. Optional visualization of individual connected components.
 
---output out_graph_file.gml
+- --output out_graph_file.gml
 Saves the final graph, with all computed attributes (e.g., distances, parent nodes, component IDs), to the specified .gml file.
 
-Examples
+### Examples
 python ./graph.py --create_random_graph 200 1.5 --multi_BFS 0 5 20 --analyze --plot --output final_graph.gml
 Creates a 200-node graph, computes BFS trees from nodes 0, 5, and 20, performs full structural analysis, plots all findings, and saves the graph to final_graph.gml.
 
 python ./graph.py --input data.gml --analyze --plot
 Reads a pre-defined graph, analyzes its structure, and displays a visualization.
 
-Expected Output
-Your program must:
+### Expected Output
+#### Your program must:
 
-Provide terminal output summarizing all analyses in a clear, professional format;
+- Provide terminal output summarizing all analyses in a clear, professional format;
 
-Include visual plots with meaningful legends, titles, and annotations;
+- Include visual plots with meaningful legends, titles, and annotations;
 
-Export enriched .gml files with custom attributes for nodes and edges.
+- Export enriched .gml files with custom attributes for nodes and edges.
 
-Design Expectations
-Use a modular code structure, with separate components for:
+### Design Expectations
+#### Use a modular code structure, with separate components for:
 
-Graph generation;
+- Graph generation;
 
-File I/O;
+- File I/O;
 
-Graph algorithms (BFS, component detection, cycle detection);
+- Graph algorithms (BFS, component detection, cycle detection);
 
-Visualization;
+- Visualization;
 
-Argument parsing and orchestration.
+- Argument parsing and orchestration.
 
-Implement robust error handling, including:
+#### Implement robust error handling, including:
 
-File not found;
+- File not found;
 
-Malformed input graphs;
+- Malformed input graphs;
 
-Invalid node IDs;
+- Invalid node IDs;
 
-Insufficient parameters.
+- Insufficient parameters.
 
-Document your code thoroughly with function docstrings and comments.
+#### Document your code thoroughly with function docstrings and comments.
 
  
 
