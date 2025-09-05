@@ -35,7 +35,7 @@ elif args.input:
         print("Successfully read graph from {args.input}.")
         print("Nodes: ", graph.nodes())
         print("Edges: ", graph.edges())
-    # pass # reads given graph, is overriden by create_random_graph
+    # pass # reads given graph, is overridden by create_random_graph
     except FileNotFoundError:
         print(f"Error: The file '{args.input}' was not found.")
         exit(1)
