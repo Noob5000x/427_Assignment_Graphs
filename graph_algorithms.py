@@ -20,7 +20,7 @@ def multi_BFS(graph, startNodes):
         parents = {node: None for node in graph.nodes()} 
 
         distances[startNode] = 0
-        queue = [(startNode), 0]
+        queue = [(startNode, 0)]
 
         while queue:
             currentNode, currentDistance = queue.pop(0)
@@ -37,3 +37,45 @@ def multi_BFS(graph, startNodes):
             graph.nodes[node][f"parent{suffix}"] = parents[node]
         
         print(f"BFS from node '{startNode}' was successful. Path attributes were stored with suffix '{suffix}'.")
+
+def connectedComp(graph):
+    '''
+    Identifies and labels connected components in the graph.
+
+    Arguments:
+        graph (nx.Graph): graph to analyze
+
+    Returns:
+        int: # of connected components
+    '''
+
+    components = list(nx.connected_components(graph))
+    for i, component in enumerate(components):
+        for node in component:
+            graph.nodes[node]['component_id'] = i
+    return len(components)
+
+def findCycles(graph, num_components):
+    '''
+    Looks for any cycles in the graph
+
+    Arguments:
+        graph (nx.Graph): graph to analyze
+        num_components (int): # of connected components
+
+    Returns:
+        bool: True if cycles exist, False otherwise.
+    '''
+    return not nx.is_forest(graph)
+
+def isolated_nodes(graph):
+    '''
+    Identifies and returns a list of isolated nodes.
+
+    Arguments:
+        graph (nx.Graph): graph to analyze
+    
+    Returns:
+        list: list of isolated node IDs
+    '''
+    return list(nx.isolates(graph))
