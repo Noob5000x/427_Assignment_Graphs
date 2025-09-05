@@ -29,7 +29,7 @@ elif args.input:
         print("Successfully read graph from {args.input}.")
         print("Nodes: ", graph.nodes())
         print("Edges: ", graph.edges())
-    # pass # reads given graph, is overriden by create_random_graph
+    # pass # reads given graph, is overridden by create_random_graph
     except FileNotFoundError:
         print(f"Error: The file '{args.input}' was not found.")
         exit(1)
@@ -39,7 +39,30 @@ else:
 
 # Multi-source BFS w/ Path Tracking
 if args.multi_BFS:
-    for startingNode in args.multi_BFS:
+    for i, startingNode in enumerate(args.multi_BFS):
         if startingNode not in graph:
             print(f"Node '{startingNode}' was not found in the graph.")
             continue
+
+        suffix = f"_{i}"
+        # Vertices are not visited
+        for node in graph.nodes():
+            graph.nodes[node][f"distance{suffix}"] = float ('inf')
+            graph.nodes[node][f"parent{suffix}"] = None
+        
+        graph.nodes[startingNode][f"distance{suffix}"] = 0
+
+        queue = [(startingNode, 0)]
+
+        while queue:
+            currentNode, currentDist = queue.pop(0)
+            for neighbor in graph.neighbors(currentNode):
+                if graph.nodes[neighbor][f"distance{suffix}"] == float('inf'):
+                    graph.nodes[neighbor][f"distance{suffix}"] = currentDist + 1
+                    graph.nodes[neighbor][f"parent{suffix}"] = currentNode
+                    queue.append((neighbor, currentDist + 1))
+        print(f"BFS from node '{startingNode}' was completed. Path attributes stored with suffix '{suffix}'.")
+
+
+
+
