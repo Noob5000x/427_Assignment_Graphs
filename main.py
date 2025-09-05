@@ -3,6 +3,12 @@ import random as rand
 import argparse as ap
 import math
 
+# Import modular component files
+import graph_io
+import graph_algorithms
+import graph_analysis
+import visualizer
+
 parser = ap.ArgumentParser()
 
 parser.add_argument("--input")
@@ -37,9 +43,9 @@ else:
     print("Missing arguments (--input graph_file.gml or --create_random_graph n c)\n")
     exit(1)
 
-# Multi-source BFS w/ Path Tracking
-if args.multi_BFS:
-    for startingNode in args.multi_BFS:
-        if startingNode not in graph:
-            print(f"Node '{startingNode}' was not found in the graph.")
-            continue
+# Multi-source BFS w/ Path Tracking - will be in graph_algorithms.py
+# if args.multi_BFS:
+    # for startingNode in args.multi_BFS:
+        # if startingNode not in graph:
+           # print(f"Node '{startingNode}' was not found in the graph.")
+           # continue
