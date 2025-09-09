@@ -29,4 +29,4 @@ def avgShortestPath(graph):
 
     if nx.is_connected(graph):
         return nx.average_shortest_path_length(graph)
-    return "The graph is not connected."
+    return "The graph is not connected (N/A)."

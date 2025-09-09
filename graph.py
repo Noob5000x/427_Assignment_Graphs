@@ -32,11 +32,11 @@ if args.create_random_graph:
     print(f'Generated a random graph with {n} nodes and p={p:.4f}.')
 elif args.input:
     try:
-        graph = nx.read_gml(args.input)
+        graph = graph_io.readGraph(args.input)
         print("Successfully read graph from {args.input}.")
         print("Nodes: ", graph.nodes())
         print("Edges: ", graph.edges())
-    # pass # reads given graph, is overridden by create_random_graph
+
     except FileNotFoundError:
         print(f"Error: The file '{args.input}' was not found.")
         exit(1)
@@ -62,8 +62,8 @@ if args.analyze:
         print (f"The inputted graph does not contain cycles.")
     
     # Identifies nodes that are not connected to any other nodes
-    isolated_nodes = graph_algorithms.isolated_nodes(graph)
-    print(f"The graph contains the following isolated nodes: {isolated_nodes}.")
+    isolated_nodes_list = graph_algorithms.isolated_nodes(graph)
+    print(f"The graph contains the following isolated nodes: {isolated_nodes_list}.")
 
     # Prints the density of the graph - needs to be implemented in graph_analysis
     density = graph_analysis.graph_density(graph)
@@ -75,7 +75,7 @@ if args.analyze:
 
 # Plots graph - needs to be implemented in visualizer.py
 if args.plot:
-    print("--- Plotting Graph ---")
+    print("\n--- Plotting Graph ---")
     visualizer.plotGraph(graph, args.multi_BFS) 
 
 # Saves output into a file - needs to be implemented

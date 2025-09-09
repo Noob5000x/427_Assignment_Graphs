@@ -11,16 +11,19 @@ def multi_BFS(graph, startNodes):
     '''
 
     for i, startNode in enumerate(startNodes):
-        if startNode not in graph:
-            print(f"Node '{startNode}' could not be found. Skipping node.")
+
+        startNode_str = str(startNode)
+
+        if startNode_str not in graph:
+            print(f"Node '{startNode_str}' could not be found. Skipping node.")
             continue
 
         # Dictionaries to store distances and parents for BFS
         distances = {node: float('inf') for node in graph.nodes()}
         parents = {node: None for node in graph.nodes()} 
 
-        distances[startNode] = 0
-        queue = [(startNode, 0)]
+        distances[startNode_str] = 0
+        queue = [(startNode_str, 0)]
 
         while queue:
             currentNode, currentDistance = queue.pop(0)

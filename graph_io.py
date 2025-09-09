@@ -27,6 +27,9 @@ def writeGraph(graph, file_path):
         graph (nx.graph): saved graph
         file_path (str): The path to the .gml output file
     '''
+    if file_path is None:
+        print("Error: no valid file path.")
+        return
     try:
         nx.write_gml(graph, file_path)
     except Exception as e:
