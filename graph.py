@@ -12,7 +12,7 @@ import visualizer
 parser = ap.ArgumentParser()
 
 parser.add_argument("--input")
-parser.add_argument("--create_random_graph", nargs=2, type=int)
+parser.add_argument("--create_random_graph", nargs=2, type=float)
 
 parser.add_argument("--multi_BFS", nargs="+")
 parser.add_argument("--analyze", action="store_true")
@@ -24,6 +24,7 @@ args = parser.parse_args()
 # Generate Graph
 if args.create_random_graph:
     n, c = args.create_random_graph
+    n = int(n)
     p = c * math.log(n) / n if n > 1 else 0
     graph = nx.erdos_renyi_graph(n, p)
     mapping = {i: str(i) for i in range(n)}
@@ -61,18 +62,21 @@ if args.analyze:
         print (f"The inputted graph does not contain cycles.")
     
     # Identifies nodes that are not connected to any other nodes
-    isolated_nodes = graph_algorithms.isolatedNodes(graph)
+    isolated_nodes = graph_algorithms.isolated_nodes(graph)
     print(f"The graph contains the following isolated nodes: {isolated_nodes}.")
 
     # Prints the density of the graph - needs to be implemented in graph_analysis
-    
+    density = graph_analysis.graph_density(graph)
+    print(f"Graph Density: {density:.4f}")
     
     # Prints the average shortest path length - needs to be implemented in graph_analysis
+    avg_path_length = graph_analysis.avgShortestPath(graph)
+    print(f"Average Shortest Path Length: {avg_path_length}")
 
 # Plots graph - needs to be implemented in visualizer.py
 if args.plot:
-    print("\--- Plotting Graph ---")
-    visualizer.plot_graph(graph, args.multi_BFS) 
+    print("--- Plotting Graph ---")
+    visualizer.plotGraph(graph, args.multi_BFS) 
 
 # Saves output into a file - needs to be implemented
 if args.output:
