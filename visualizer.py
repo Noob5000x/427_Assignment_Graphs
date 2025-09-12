@@ -15,7 +15,9 @@ def plotGraph(graph, bfs_start_nodes):
 
     nx.draw_networkx_nodes(graph, pos, node_color = 'lightgray', node_size = 100)
     nx.draw_networkx_edges(graph, pos, edge_color = 'black', width=1)
-    nx.draw_networkx_labels(graph, pos, font_size = 8)
+    
+    labels = {node: str(node) for node in graph.nodes()}
+    nx.draw_networkx_labels(graph, pos, labels=labels, font_size = 8)
 
     isolated_nodes = list(nx.isolates(graph))
     if isolated_nodes:
@@ -23,7 +25,8 @@ def plotGraph(graph, bfs_start_nodes):
     
     if bfs_start_nodes:
         for i, startNode in enumerate(bfs_start_nodes):
-            if startNode in graph:
+            startNode_str = str(startNode)
+            if startNode_str in graph:
                 path_edges = []
                 for node in graph.nodes():
                     parent_attr = f"parent_{i}"
@@ -31,8 +34,10 @@ def plotGraph(graph, bfs_start_nodes):
                         parent_node = graph.nodes[node][parent_attr]
                         path_edges.append((parent_node, node))
                 path_color = plt.cm.get_cmap('rainbow', len(bfs_start_nodes))(i)
-                nx.draw_networkx_edges(graph, pos, edgelist=path_edges, edge_color=[path_color] * len(path_edges), width=3, label=f'Path from {startNode}')
-        plt.legend()
+                nx.draw_networkx_edges(graph, pos, edgelist=path_edges, edge_color=[path_color] * len(path_edges), width=3, label=f'Path from {startNode_str}')  # Use startNode_str here
+    plt.legend()
     plt.title("Graph Visualization with BFS Paths & Components")
     plt.axis('off')
     plt.show()
+
+    

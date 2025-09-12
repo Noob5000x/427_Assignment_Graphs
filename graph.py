@@ -1,5 +1,4 @@
 import networkx as nx
-import random as rand
 import argparse as ap
 import math
 
@@ -8,18 +7,9 @@ import graph_io
 import graph_algorithms
 import graph_analysis
 import visualizer
+import argument_parser
 
-parser = ap.ArgumentParser()
-
-parser.add_argument("--input")
-parser.add_argument("--create_random_graph", nargs=2, type=float)
-
-parser.add_argument("--multi_BFS", nargs="+")
-parser.add_argument("--analyze", action="store_true")
-parser.add_argument("--plot", action="store_true")
-parser.add_argument("--output")
-
-args = parser.parse_args()
+args = argument_parser.get_args()
 
 # Generate Graph
 if args.create_random_graph:
@@ -33,19 +23,18 @@ if args.create_random_graph:
 elif args.input:
     try:
         graph = graph_io.readGraph(args.input)
-        print("Successfully read graph from {args.input}.")
-        print("Nodes: ", graph.nodes())
-        print("Edges: ", graph.edges())
+        print(f"Successfully read graph from {args.input}.")
 
     except FileNotFoundError:
         print(f"Error: The file '{args.input}' was not found.")
         exit(1)
 else:
-    print("Missing arguments (--input graph_file.gml or --create_random_graph n c)\n")
+    print("Missing arguments (\"--input graph_file.gml\" or \"--create_random_graph n c\")\n")
     exit(1)
 
 if args.multi_BFS:
-    graph_algorithms.multi_BFS(graph, args.multi_BFS)
+    bfs_nodes = [str(node) for node in args.multi_BFS]
+    graph_algorithms.multi_BFS(graph, bfs_nodes)
 
 if args.analyze:
     print("\n---Graph Analysis---")
@@ -65,20 +54,14 @@ if args.analyze:
     isolated_nodes_list = graph_algorithms.isolated_nodes(graph)
     print(f"The graph contains the following isolated nodes: {isolated_nodes_list}.")
 
-    # Prints the density of the graph - needs to be implemented in graph_analysis
+    # Prints the density of the graph
     density = graph_analysis.graph_density(graph)
     print(f"Graph Density: {density:.4f}")
     
-    # Prints the average shortest path length - needs to be implemented in graph_analysis
+    # Prints the average shortest path length
     avg_path_length = graph_analysis.avgShortestPath(graph)
     print(f"Average Shortest Path Length: {avg_path_length}")
 
-# Plots graph - needs to be implemented in visualizer.py
-if args.plot:
-    print("\n--- Plotting Graph ---")
-    visualizer.plotGraph(graph, args.multi_BFS) 
-
-# Saves output into a file - needs to be implemented
+# Saves output into a file
 if args.output:
-    graph_io.writeGraph(graph, args.output)
-    print(f"\nGraph with attributes saved to {args.output}")
+    graph_io.writeGraph(graph, str(args.output))

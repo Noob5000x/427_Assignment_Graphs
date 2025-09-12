@@ -18,19 +18,41 @@ def readGraph(file_path):
         return nx.read_gml(file_path)
     except FileNotFoundError:
         raise FileNotFoundError(f"Error: file '{file_path}' could not be found")
-    
+
 def writeGraph(graph, file_path):
     '''
-    Saves the graph to a .gml file, which will indicate all nodes and edges
-
-    Arguments:
-        graph (nx.graph): saved graph
-        file_path (str): The path to the .gml output file
+    Saves the graph to a .gml file
     '''
-    if file_path is None:
-        print("Error: no valid file path.")
-        return
     try:
-        nx.write_gml(graph, file_path)
+        
+        with open(file_path, 'w') as f:
+            f.write('graph [\n')
+            
+            # Write nodes
+            for node in graph.nodes():
+                f.write(f'  node [\n')
+                f.write(f'    id {node}\n')
+                f.write(f'    label "{node}"\n')
+                
+                # Write all attributes
+                for attr_name, attr_value in graph.nodes[node].items():
+                    if attr_value is not None:
+                        f.write(f'    {attr_name} {attr_value}\n')
+                
+                f.write('  ]\n')
+            
+            # Write edges
+            for edge in graph.edges():
+                f.write('  edge [\n')
+                f.write(f'    source {edge[0]}\n')
+                f.write(f'    target {edge[1]}\n')
+                f.write('  ]\n')
+            
+            f.write(']\n')
+        
+        print(f"Graph successfully saved to {file_path}")
+        return True
+        
     except Exception as e:
-        print(f"Error: could not save graph {e}.")
+        print(f"Could not save graph. Error: {e}")
+        return False
