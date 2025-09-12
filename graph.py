@@ -62,6 +62,11 @@ if args.analyze:
     avg_path_length = graph_analysis.avgShortestPath(graph)
     print(f"Average Shortest Path Length: {avg_path_length}")
 
+# Plots graph
+if args.plot:
+    print("\n--- Plotting Graph ---")
+    visualizer.plotGraph(graph, args.multi_BFS)
+    
 # Saves output into a file
 if args.output:
     graph_io.writeGraph(graph, str(args.output))

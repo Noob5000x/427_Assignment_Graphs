@@ -35,7 +35,7 @@ def plotGraph(graph, bfs_start_nodes):
                         path_edges.append((parent_node, node))
                 path_color = plt.cm.get_cmap('rainbow', len(bfs_start_nodes))(i)
                 nx.draw_networkx_edges(graph, pos, edgelist=path_edges, edge_color=[path_color] * len(path_edges), width=3, label=f'Path from {startNode_str}')  # Use startNode_str here
-    plt.legend()
+        plt.legend()
     plt.title("Graph Visualization with BFS Paths & Components")
     plt.axis('off')
     plt.show()
