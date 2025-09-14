@@ -8,6 +8,7 @@ import graph_algorithms
 import graph_analysis
 import visualizer
 import argument_parser
+import visualizerBFS
 
 args = argument_parser.get_args()
 
@@ -65,7 +66,7 @@ if args.analyze:
 # Plots graph
 if args.plot:
     print("\n--- Plotting Graph ---")
-    visualizer.plotGraph(graph, args.multi_BFS)
+    visualizerBFS.plotBFStree(graph, args.multi_BFS)
     
 # Saves output into a file
 if args.output:
