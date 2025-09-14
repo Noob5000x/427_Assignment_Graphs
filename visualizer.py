@@ -7,7 +7,7 @@ def plotGraph(graph, bfs_start_nodes):
 
     Arguments:
         graph (nx.Graph): the graph to plot
-        bfs_start_nodes (list): a list of nodes used for BFS
+     bfs_start_nodes (list): a list of nodes used for BFS
     '''
 
     pos = nx.spring_layout(graph, k=0.3, seed=42)

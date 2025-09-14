@@ -1,12 +1,10 @@
 import networkx as nx
-import argparse as ap
 import math
 
 # Import modular component files
 import graph_io
 import graph_algorithms
 import graph_analysis
-import visualizer
 import argument_parser
 import visualizerBFS
 
