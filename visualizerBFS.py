@@ -137,10 +137,10 @@ def plotBFStreeMinimalist(graph, bfs_start_nodes):
     plt.title(f"BFS Tree Structure (Main start: {start_node})")
     plt.xlabel("Depth")
     plt.grid(True, alpha=0.1)
-    plt.tight_layout()
     plt.show()
 
 def plotBFStree(graph, bfs_start_nodes):
+    # Creates a graph for nodes less than 20 & labels nodes
     if len(graph.nodes()) < 20:
         plotBFStreeDetailed(graph, bfs_start_nodes)
     else:

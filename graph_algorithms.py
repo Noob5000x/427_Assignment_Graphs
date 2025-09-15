@@ -11,7 +11,8 @@ def multi_BFS(graph, startNodes):
     '''
 
     for i, startNode in enumerate(startNodes):
-
+        
+        # Gracefully handles nodes if they cannot be found
         if startNode not in graph:
             print(f"Node '{startNode}' could not be found. Skipping node.")
             continue
@@ -23,11 +24,12 @@ def multi_BFS(graph, startNodes):
         distances[startNode] = 0
         queue = [(startNode, 0)]
 
+        # BFS Algorithm
         while queue:
             currentNode, currentDistance = queue.pop(0)
             for neighbor in graph.neighbors(currentNode):
-                if distances[neighbor] == float('inf'):
-                    distances[neighbor] = currentDistance + 1
+                if distances[neighbor] == float('inf'): # Checks if neighbor has been visited
+                    distances[neighbor] = currentDistance + 1 # Helps calculate the shortest path distance
                     parents[neighbor] = currentNode
                     queue.append((neighbor, currentDistance + 1))
         
@@ -41,7 +43,7 @@ def multi_BFS(graph, startNodes):
 
 def connectedComp(graph):
     '''
-    Identifies and labels connected components in the graph.
+    Identifies connected components in the graph.
 
     Arguments:
         graph (nx.Graph): graph to analyze
@@ -50,11 +52,12 @@ def connectedComp(graph):
         int: # of connected components
     '''
 
+    # Identifies connected components
     components = list(nx.connected_components(graph))
     for i, component in enumerate(components):
         for node in component:
             graph.nodes[node]['component_id'] = i
-    return len(components)
+    return len(components) # Returns the number of connected components
 
 def findCycles(graph, num_components):
     '''
@@ -67,7 +70,7 @@ def findCycles(graph, num_components):
     Returns:
         bool: True if cycles exist, False otherwise.
     '''
-    return not nx.is_forest(graph)
+    return not nx.is_forest(graph) # Evaluates to True if cycle exists
 
 def isolated_nodes(graph):
     '''
@@ -79,4 +82,4 @@ def isolated_nodes(graph):
     Returns:
         list: list of isolated node IDs
     '''
-    return list(nx.isolates(graph))
+    return list(nx.isolates(graph)) # Lists the number of isolated nodes

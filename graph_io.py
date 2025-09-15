@@ -13,7 +13,7 @@ def readGraph(file_path):
     Raises:
         FileNotFoundError: if the file cannot be found/does not exist
     '''
-
+    # Reads the graph file inputted and returns an error if the file cannot be found
     try:
         return nx.read_gml(file_path)
     except FileNotFoundError:
@@ -24,7 +24,7 @@ def writeGraph(graph, file_path):
     Saves the graph to a .gml file
     '''
     try:
-        
+        # Creates the .gml file
         with open(file_path, 'w') as f:
             f.write('graph [\n')
             
@@ -50,9 +50,11 @@ def writeGraph(graph, file_path):
             
             f.write(']\n')
         
+        # Prints if graph is saved successfully
         print(f"Graph successfully saved to {file_path}")
         return True
         
     except Exception as e:
+        # Outputs that the graph could not be saved
         print(f"Could not save graph. Error: {e}")
         return False

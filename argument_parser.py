@@ -1,6 +1,10 @@
 import argparse as ap
 
 def get_args():
+    '''
+    Parses the command-line argument(s) for analyzing/processing the graph.
+    Utilizes the 'argparse' module for the graph processing script. 
+    '''
     parser = ap.ArgumentParser()
 
     parser.add_argument("--input")
