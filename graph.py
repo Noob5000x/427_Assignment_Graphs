@@ -64,7 +64,8 @@ if args.analyze:
 # Plots graph
 if args.plot:
     print("\n--- Plotting Graph ---")
-    visualizerBFS.plotBFStree(graph, args.multi_BFS)
+    bfs_nodes = args.multi_BFS if args.multi_BFS else []
+    visualizerBFS.plotBFStree(graph, bfs_nodes)
     
 # Saves output into a file
 if args.output:
