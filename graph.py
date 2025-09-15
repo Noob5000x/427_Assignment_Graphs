@@ -14,14 +14,12 @@ args = argument_parser.get_args()
 if args.create_random_graph:
     n, c = args.create_random_graph
     n = int(n)
-    # Uses the Erdos-Renyi graph algorithm
     p = c * math.log(n) / n if n > 1 else 0
     graph = nx.erdos_renyi_graph(n, p)
     mapping = {i: str(i) for i in range(n)}
     graph = nx.relabel_nodes(graph, mapping)
     print(f'Generated a random graph with {n} nodes and p={p:.4f}.')
 elif args.input:
-    # If graph is read successfully, print message. Otherwise, print error message.
     try:
         graph = graph_io.readGraph(args.input)
         print(f"Successfully read graph from {args.input}.")
@@ -30,12 +28,10 @@ elif args.input:
         print(f"Error: The file '{args.input}' was not found.")
         exit(1)
 else:
-    # Gracefully handles insufficient parameters
     print("Missing arguments (\"--input graph_file.gml\" or \"--create_random_graph n c\")\n")
     exit(1)
 
 if args.multi_BFS:
-    # Runs BFS
     bfs_nodes = [str(node) for node in args.multi_BFS]
     graph_algorithms.multi_BFS(graph, bfs_nodes)
 
@@ -47,7 +43,7 @@ if args.analyze:
     print(f"Number of Connected Components: {num_components}")
 
     # Prints whether or not the graph contains cycles
-    cycles = graph_algorithms.findCycles(graph, num_components)
+    cycles = graph_algorithms.findCycles(graph)
     if cycles:
         print (f"The inputted graph contains cycles.")
     else:
@@ -69,7 +65,7 @@ if args.analyze:
 if args.plot:
     print("\n--- Plotting Graph ---")
     bfs_nodes = args.multi_BFS if args.multi_BFS else []
-    visualizerBFS.plotBFStree(graph, bfs_nodes)
+    visualizerBFS.plotBFStree(graph, bfs_nodes, graph_algorithms.isolated_nodes(graph))
     
 # Saves output into a file
 if args.output:
