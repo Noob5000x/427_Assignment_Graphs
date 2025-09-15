@@ -1,117 +1,79 @@
 # 427 Assignment Graphs
+### Names: Daniel Jose Quizon & Christella Marie P. Taguicana
 
-### Objective
+## Usage Instructions
 
-The goal of this team-based assignment is to advance your skills in graph theory, algorithmic analysis, and professional software development by collaboratively designing and implementing a comprehensive Python application that handles Erdős–Rényi random graph generation, analysis, transformation, and visualization.
+Ensure that the 'networkx' and 'matplotlib' modules are installed:
+'''
+pip install networkx matplotlib
+'''
+### Command Line Structure
 
-You will work in pairs to design, implement, and analyze a modular program capable of:
+To generate a random graph, analyze it, plot visualization, and saves to an output file:
+'''
+python ./graph.py [--create_random_graph n c] [--multi_BFS a1 a2 ...] [--analyze] [--plot] [--output out_graph_file_name.gml]    
+'''
 
-- Generating and exporting Erdős–Rényi graphs;
+To read an existing file, analyze and plot it:
+'''
+python ./graph.py [--input file.gml] --analyze --plot
+'''
 
-- Importing and analyzing graphs from .gml files;
+## Implementation
+Our implementation consists of 6 files titled:
+'''
+argument_parser.py
+graph_algorithms.py
+graph_analysis.py
+graph_io.py
+graph.py
+visualizerBFS.py
+'''
 
-- Performing multi-source BFS with path tracking;
+argument_parser.py:
+'''
+This file parses the command line arguments to process and analyze the graph. We added the specific arguments (i.e. --input, --create_random_graph, etc.) using the 'argparse' module.
+'''
 
-- Identifying connected components;
+graph_algorithms.py:
+'''
+This file includes all the algorithms that would perform Breadth-First Search (BFS) and identify/calculate the connected components, cycles, and isolated nodes in the graph. 
+The function multi_BFS(graph, startNodes) performs BFS after accepting one or more nodes, either from a pre-defined graph or when creating a new one. If nodes cannot be found, they are handled by skipping it gracefully. We used dictionaries to store the distances and parents for the BFS to refer back to it later on. The suffix section creates a unique identifier for each BFS run so that they are stored separately.
+The function connectedComp(graph) identifies the connected components in the graph. Using the 'networkx' module, a list is created for the connected components.  When the code runs, the nuumber of connected components is returned.
+The function findCycles(graph, num_components) using nx._is_forest from the 'networkx' module. If not nx.is_forest(graph), that means a cycle exists in the graph. 
+The function isolated_nodes(graph) uses the nx.isolates(graph) function to create a list of the isolated nodes and return them.
+'''
 
-- Detecting cycles and isolated nodes;
+graph_analysis.py:
+'''
+This file contains the functions graph_density(graph) and avgShortestPath(graph). 
+graph_density(graph) calculates the density of the graph by calculating the maximum possible number of edges. Then, it divides the actual number of edges by the maximum possible number of edges. If the density is less than 1.0, then the graph is either not connected (0.0) or very sparse.
+avgShortestPath(graph) calculates the shortest path length for the generated or given graph using the nx.average_shortest_path_length(graph) function if the graph is connected.
+'''
 
-- Visualizing graphs with annotated paths and substructures;
+graph_io.py:
+'''
+This file reads and writes files.
+readGraph(file_path): It attempts to read a file, and if the file cannot be found, an error message shows up.
+writeGraph(graph, file_path): creates the .gml file, writes nodes, attributes, and edges, and saves the graph. An appropriate error message is displayed if writing the output file is unsuccessful.
+'''
 
-- Exporting computed metadata alongside the graph.
+graph.py
+'''
+This is the main driver of the program.
 
-This assignment emphasizes both theoretical understanding and practical implementation. The quality of your design decisions, documentation, and analysis is just as important as functional correctness.
+The code generates a random graph using Erdos-Renyi if the command-line prompt instructs it to do so. If the program is reading a graph, a message will be displayed to continue running the program. If not, errors are handled gracefully.
+If args.multi_BFS is called, then the multi_BFS function is called to run. The same logic applies to args.analyze (analyzes graph), args.plot (plots graph), and args.output (writes graph to an output .gml file).
+'''
 
-### Functional Requirements
+visualizerBFS.py
+'''
+This file plots the graph that was read. 
+plotBFStreeDetailed(graph, bfs_start_nodes): finds the start node and builds the BFS tree, while also recording depths. Then, it also lays out the nodes in a depth-based layout. The tree is drawn, while being provided appropriate colors for visibility. Each BFS path is then highlighted as BFS is performed from the start node. The start node is highlighted for clarity, and the levels/layers are labeled.
 
-You must implement a Python script graph.py that accepts the following command-line parameters and performs operations accordingly. Your solution must be well-structured and modular, with meaningful separation between graph generation, file I/O, algorithms, and visualization.
+plotBFStreeMinimalist(graph, bfs_start_nodes): builds the BFS tree from main start node. This is similar to the detailed graph, but is more tailored for graphs with less nodes.
 
-#### Command-Line Structure
-python ./graph.py [--input graph_file.gml] [--create_random_graph n c] [--multi_BFS a1 a2 ...] [--analyze] [--plot] [--output out_graph_file.gml]
-#### Descriptions of Parameters
-- --input graph_file.gml
-Reads a graph from the given .gml file and uses it for all subsequent operations.
+plotBFStree(graph, bfs_start_nodes): calls the designated function depending on the number of nodes that are being read.
+'''
 
-- --create_random_graph n c
-Generates a new Erdős–Rényi graph with n nodes and edge probability 
-p=nc⋅lnn​. Overrides --input. Nodes must be labeled with strings ("0", "1", ..., "n-1").
-
-- --multi_BFS a1 a2 ...
-Accepts one or more starting nodes and computes BFS trees from each, storing all shortest paths. Each BFS tree must be independently visualized and compared.
-
-- --analyze
-Performs additional structural analyses on the graph, including:
-
-1. Connected Components
-Counts how many distinct connected subgraphs exist.
-
-2. Cycle Detection
-Determines whether the graph contains any cycles.
-A cycle is a path that starts and ends at the same node, without repeating any edges or nodes (except the start/end).
-
-3. Isolated Nodes
-Identifies nodes that are not connected to any other node.
-
-4. Graph Density
-Computes how dense the graph is.
-Graph density measures how many edges exist in the graph compared to the maximum possible. It is a number between 0 (very sparse) and 1 (fully connected).
-
-5. Average Shortest Path Length
-If the graph is connected, computes the average number of steps along the shortest paths for all pairs of nodes.
-
-- --plot
-Visualizes the graph with:
-
-1. Highlighted shortest paths from each BFS root node;
-
-2. Distinct styling for isolated nodes;
-
-3. Optional visualization of individual connected components.
-
-- --output out_graph_file.gml
-Saves the final graph, with all computed attributes (e.g., distances, parent nodes, component IDs), to the specified .gml file.
-
-### Examples
-python ./graph.py --create_random_graph 200 1.5 --multi_BFS 0 5 20 --analyze --plot --output final_graph.gml
-Creates a 200-node graph, computes BFS trees from nodes 0, 5, and 20, performs full structural analysis, plots all findings, and saves the graph to final_graph.gml.
-
-python ./graph.py --input data.gml --analyze --plot
-Reads a pre-defined graph, analyzes its structure, and displays a visualization.
-
-### Expected Output
-#### Your program must:
-
-- Provide terminal output summarizing all analyses in a clear, professional format;
-
-- Include visual plots with meaningful legends, titles, and annotations;
-
-- Export enriched .gml files with custom attributes for nodes and edges.
-
-### Design Expectations
-#### Use a modular code structure, with separate components for:
-
-- Graph generation;
-
-- File I/O;
-
-- Graph algorithms (BFS, component detection, cycle detection);
-
-- Visualization;
-
-- Argument parsing and orchestration.
-
-#### Implement robust error handling, including:
-
-- File not found;
-
-- Malformed input graphs;
-
-- Invalid node IDs;
-
-- Insufficient parameters.
-
-#### Document your code thoroughly with function docstrings and comments.
-
- 
-
-Programs that fail to follow the instructions or do not produce working results will not receive points. Ensure that your solution is complete and meets all outlined requirements.
+## Examples of commands and outputs provided
