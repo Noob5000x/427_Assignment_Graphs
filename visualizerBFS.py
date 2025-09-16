@@ -195,6 +195,7 @@ def plotBFStreeMinimalist(graph, bfs_start_nodes, iso_nodes):
     plt.show()
 
 def plotBFStree(graph, bfs_start_nodes, iso_nodes):
+    # Creates a graph for nodes less than 20 & labels nodes
     if len(graph.nodes()) < 20:
         plotBFStreeDetailed(graph, bfs_start_nodes, iso_nodes)
     else:

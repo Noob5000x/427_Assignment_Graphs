@@ -12,6 +12,7 @@ def multi_BFS(graph, startNodes):
 
     for i, startNode in enumerate(startNodes):
 
+        # Gracefully handles nodes if they cannot be found
         if startNode not in graph:
             print(f"Node '{startNode}' could not be found. Skipping node.")
             continue
@@ -23,10 +24,13 @@ def multi_BFS(graph, startNodes):
         distances[startNode] = 0
         queue = [(startNode, 0)]
 
+        # BFS Algorithm
         while queue:
             currentNode, currentDistance = queue.pop(0)
             for neighbor in graph.neighbors(currentNode):
+                # Checks if neighbor has been visited
                 if distances[neighbor] == float('inf'):
+                    # Helps calculate the shortest path distance
                     distances[neighbor] = currentDistance + 1
                     parents[neighbor] = currentNode
                     queue.append((neighbor, currentDistance + 1))
@@ -49,7 +53,7 @@ def connectedComp(graph):
     Returns:
         int: # of connected components
     '''
-
+    # Identifies connected components
     components = list(nx.connected_components(graph))
     for i, component in enumerate(components):
         for node in component:
@@ -66,7 +70,7 @@ def findCycles(graph):
     Returns:
         bool: True if cycles exist, False otherwise.
     '''
-    return not nx.is_forest(graph)
+    return not nx.is_forest(graph) # Evaluates to True if cycle exist
 
 def isolated_nodes(graph):
     '''
@@ -78,4 +82,4 @@ def isolated_nodes(graph):
     Returns:
         list: list of isolated node IDs
     '''
-    return list(nx.isolates(graph))
+    return list(nx.isolates(graph)) # Lists the number of isolated nodes
