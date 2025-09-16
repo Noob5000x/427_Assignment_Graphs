@@ -1,4 +1,5 @@
 import networkx as nx
+import re
 
 def readGraph(file_path):
     '''
@@ -15,7 +16,11 @@ def readGraph(file_path):
     '''
 
     try:
-        return nx.read_gml(file_path)
+        with open(file_path, 'r') as f:
+            content = f.read()
+        # Rewrites 'inf' into 999999999
+        content = re.sub(r'\binf\b', '999999999', content)
+        return nx.parse_gml(content)
     except FileNotFoundError:
         raise FileNotFoundError(f"Error: file '{file_path}' could not be found")
 
@@ -37,6 +42,8 @@ def writeGraph(graph, file_path):
                 # Write all attributes
                 for attr_name, attr_value in graph.nodes[node].items():
                     if attr_value is not None:
+                        if attr_value == float('inf'):
+                            attr_value = 999999999
                         f.write(f'    {attr_name} {attr_value}\n')
                 
                 f.write('  ]\n')
