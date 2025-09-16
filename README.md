@@ -84,7 +84,13 @@ This is the main driver of the program.
     **Analysis Output:** ![Alt text](images/sample_output_analysis.png)
 
 2. **Creating a random graph:**
-    python ./graph.py --input sample_output.gml --analyze --plot
+    python ./graph.py --create_random_graph 19 1.5 --multi_BFS 0 5 10 15 --analyze --plot --output testing9.gml
 
     **Visual Output:** ![Alt text](images/sample_random_graph.png)
     **Analysis Output:** ![Alt text](images/sample_random_analysis.png)
+
+3. **Example of Graph with Isolated Nodes: **
+    python ./graph.py --input testing2.gml --analyze --plot
+
+    **Visual Output:** ![Alt text](images/sample_isolated_graph.png)
+    **Analysis Output:** ![Alt text](images/sample_isolated_analysis.png)
