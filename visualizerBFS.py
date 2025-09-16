@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from collections import deque
 
 def plotBFStreeDetailed(graph, bfs_start_nodes, iso_nodes):
-    """Visualization for small graphs with highlighted BFS paths"""
     # Build a comprehensive tree that includes all nodes
     tree = nx.Graph()
     depths = {}
@@ -54,7 +53,6 @@ def plotBFStreeDetailed(graph, bfs_start_nodes, iso_nodes):
     
     nx.draw_networkx_labels(tree, pos, font_size=9)
     
-    # Generate distinct colors for each BFS path
     colors = ['red', 'green', 'blue', 'orange', 'purple', 'brown', 'pink', 'cyan']
     
     # Highlight each BFS path
@@ -118,7 +116,6 @@ def plotBFStreeDetailed(graph, bfs_start_nodes, iso_nodes):
     plt.show()
 
 def plotBFStreeMinimalist(graph, bfs_start_nodes, iso_nodes):
-    """Visualization with depth layers and node highlighting"""
     # Build a comprehensive tree that includes all nodes
     tree = nx.Graph()
     depths = {}
